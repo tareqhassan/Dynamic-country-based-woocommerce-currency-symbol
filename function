@@ -1,0 +1,16 @@
+function wc_currency_symbol_shortcode( $atts ) {
+  $atts = shortcode_atts( array(
+    'currency' => get_woocommerce_currency(),
+    'position' => get_option( 'woocommerce_currency_pos' ),
+    'space_between' => false,
+  ), $atts, 'woocommerce_currency_symbol' );
+
+  $currency_symbol = get_woocommerce_currency_symbol( $atts['currency'] );
+  if ( $atts['position'] === 'left' ) {
+    $formatted_symbol = $currency_symbol . ( $atts['space_between'] ? ' ' : '' );
+  } else {
+    $formatted_symbol = ( $atts['space_between'] ? ' ' : '' ) . $currency_symbol;
+  }
+  return $formatted_symbol;
+}
+add_shortcode( 'woocommerce_currency_symbol', 'wc_currency_symbol_shortcode' );
